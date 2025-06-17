@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const restaurantMenu_controller_1 = require("../controllers/restaurantMenu.controller");
+const router = express_1.default.Router();
+router.post("/category", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.createCategory);
+router.post("/subcategory", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.createSubcategory);
+router.get("/foods", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.getFoodItemsByRestaurant);
+router.post("/food", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.createFoodItem);
+router.get("/menu", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.getFullMenu);
+router.get("/food/:foodId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.getFoodItemById);
+router.get("/categories", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.getMyCategories);
+router.get("/subcategories/:categoryId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.getSubcategoriesByCategory);
+router.put("/food/:foodId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.updateFoodItem);
+router.delete("/food/:foodId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorizeRoles)("restaurant"), restaurantMenu_controller_1.deleteFoodItem);
+exports.default = router;

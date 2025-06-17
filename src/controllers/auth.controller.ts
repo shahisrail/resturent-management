@@ -16,9 +16,11 @@ export const login = async (req: Request, res: Response) => {
   try {
     const data = loginSchema.parse(req.body);
     const { user, token } = await loginUser(data);
+
     res.json({ message: "Login successful", user, token });
   } catch (err: any) {
     res.status(400).json({ error: err.message });
+    console.log(err.message);
   }
 };
 
